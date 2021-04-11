@@ -1,0 +1,33 @@
+<mat-card-title>
+    List
+</mat-card-title>
+<mat-card-content>
+    <form [formGroup]="filterForm" class="filters">
+        <mat-checkbox color="accent" formControlName="isDoneOnly">Done only</mat-checkbox>
+
+        <mat-form-field>
+            <mat-label>Start time</mat-label>
+            <input type="time" matInput formControlName="time"/>
+        </mat-form-field>
+    </form>
+
+    <table class="table-list" matSort (matSortChange)="sortData($event)">
+        <tr>
+            <th mat-sort-header="position">No.</th>
+            <th mat-sort-header="isDone">Status</th>
+            <th mat-sort-header="title">Title</th>
+            <th mat-sort-header="time">Time</th>
+        </tr>
+
+        <tr *ngFor="let todo of sortedData">
+            <ng-container *ngIf="todo.time >= filterForm.controls.time.value && todo.isDone >= this.filterForm.controls.isDoneOnly.value">
+                <td>{{sortedData.indexOf(todo) + 1}}</td>
+                <td>
+                    <mat-checkbox (change)="changeState(sortedData.indexOf(todo))" [checked]="todo.isDone"></mat-checkbox>
+                </td>
+                <td>{{todo.title}}</td>
+                <td>{{todo.time}}</td>
+            </ng-container>
+        </tr>
+    </table>
+</mat-card-content>

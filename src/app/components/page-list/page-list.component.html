@@ -1,0 +1,14 @@
+<mat-card-title>Page list</mat-card-title>
+<mat-card-content>
+  <mat-nav-list>
+    <mat-expansion-panel hideToggle *ngFor="let collection of collections">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{collection.name}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <a *ngFor="let item of collection.array" mat-list-item routerLink="/article/{{item.path}}">{{item.title}}</a>
+    </mat-expansion-panel>
+    <a mat-list-item *ngFor="let page of pages" routerLink="/{{page.path}}">{{page.title}}</a>
+  </mat-nav-list>
+</mat-card-content>

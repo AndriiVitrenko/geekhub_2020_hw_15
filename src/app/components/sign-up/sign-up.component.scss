@@ -1,0 +1,34 @@
+.sign-up-form {
+  margin-top: 3%;
+  padding: 0 3%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  button[type=submit] {
+    align-self: flex-start;
+    margin-top: 1%;
+  }
+
+  * {
+    flex-shrink: 0;
+  }
+
+  [class*=field]:not(input) {
+    margin-bottom: 2%;
+  }
+
+  .name-field, .surname-field {
+    flex-basis: 48%;
+  }
+
+  .email-field, .password-field, .phone-field {
+    flex-basis: 100%;
+  }
+
+  .error-message {
+    font-size: 13px;
+    color: #f44336;
+  }
+}

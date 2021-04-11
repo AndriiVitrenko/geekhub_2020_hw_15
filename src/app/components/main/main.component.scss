@@ -1,0 +1,12 @@
+app-main {
+  flex-grow: 1;
+}
+
+.main-container {
+  min-height: calc(100% - 64px);
+  padding: 1rem;
+
+  p {
+    font-size: 16px;
+  }
+}

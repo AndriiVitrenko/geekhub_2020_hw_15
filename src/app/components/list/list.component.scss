@@ -1,0 +1,24 @@
+.filters {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 1.5%;
+}
+
+.mat-form-field {
+  margin-left: 2%;
+}
+
+.table-list {
+  margin-top: 1.5%;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+
+  td {
+    padding: 0.5rem 1.5rem 0.5rem 0;
+  }
+
+  th {
+    padding-bottom: 1rem;
+  }
+}
