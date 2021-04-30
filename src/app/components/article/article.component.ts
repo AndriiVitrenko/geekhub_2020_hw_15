@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {HttpClientService} from '../../services/http-client.service';
-
-interface ArticleInterface {
-  title: string;
-  text: string;
-}
+import { Store } from '@ngrx/store';
+import {article} from '../../selectors/app.selector';
 
 @Component({
   selector: 'app-article',
@@ -15,19 +12,22 @@ interface ArticleInterface {
 export class ArticleComponent implements OnInit {
   id = 0;
   img = '';
-  article: ArticleInterface = { title: '', text: ''};
+  title = '';
+  content = '';
 
-  constructor(private route: ActivatedRoute, private http: HttpClientService) { }
+  constructor(private route: ActivatedRoute, private http: HttpClientService, private store: Store<any>) {
+    this.store.select(article)
+        .subscribe(result => {
+          this.title = result.title;
+          this.content = result.content;
+          this.img = result.img;
+        });
+  }
 
   ngOnInit(): void {
     this.id = +`${this.route.snapshot.paramMap.get('id')}`;
-    this.http.getArticle()
-        .subscribe(res => {
-          this.article.title = res.articles[this.id - 1].title;
-          this.article.text = res.articles[this.id - 1].content;
-        });
-    this.http.getImages(this.id)
-        .subscribe(res => this.img = res.thumbnailUrl);
+    this.http.getArticle(this.id);
+    this.http.getImages(this.id);
   }
 
 }

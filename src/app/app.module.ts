@@ -30,6 +30,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSortModule} from '@angular/material/sort';
 import {LogInInterceptor} from './interceptors/log-in-interceptor';
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './reducers/app.reducer';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,7 @@ import {LogInInterceptor} from './interceptors/log-in-interceptor';
     MatTableModule,
     MatCheckboxModule,
     MatSortModule,
+    StoreModule.forRoot(reducer, {}),
   ],
   providers: [
     {

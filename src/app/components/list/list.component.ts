@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Sort } from '@angular/material/sort';
+import {Store} from '@ngrx/store';
+import {todos} from '../../selectors/app.selector';
+import {changeState} from '../../actions/app.actions';
 
-interface Todo {
+export interface Todo {
   title: string;
   time: string;
   isDone: boolean;
@@ -15,23 +18,17 @@ interface Todo {
 })
 export class ListComponent implements OnInit {
   filterForm!: FormGroup;
-  todoList: Todo[] = [
-    {
-      title: 'Feed the cat',
-      time: '08:15',
-      isDone: false,
-    },
-    {
-      title: 'Do homework',
-      time: '10:00',
-      isDone: true,
-    },
-  ];
+  todoList: Todo[] = [];
 
   sortedData: Todo[];
 
-  constructor() {
+  constructor(private store: Store<any>) {
     this.sortedData = this.todoList.slice();
+    this.store.select(todos)
+        .subscribe(list => {
+          this.todoList = list;
+          this.sortedData = list;
+        });
   }
 
   ngOnInit(): void {
@@ -61,7 +58,8 @@ export class ListComponent implements OnInit {
   }
 
   changeState(index: number): void {
-    this.sortedData[index].isDone = !this.sortedData[index].isDone;
+    this.store.dispatch(changeState({index}));
+    // this.sortedData[index].isDone = !this.sortedData[index].isDone;
   }
 }
 

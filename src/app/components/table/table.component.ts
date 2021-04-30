@@ -2,8 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import {HttpClientService} from '../../services/http-client.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
+import {Store} from '@ngrx/store';
+import {users} from '../../selectors/app.selector';
 
-interface UserInterface {
+export interface UserInterface {
   login: string;
   id: number;
   node_id: string;
@@ -34,16 +36,18 @@ export class TableComponent implements OnInit {
   columns = ['position', 'login', 'avatar_url', 'url', 'repos_url'];
   data = new MatTableDataSource<UserInterface>(this.users);
 
-  constructor(private http: HttpClientService) { }
+  constructor(private http: HttpClientService, private store: Store<any>) {
+    this.store.select(users)
+        .subscribe(state => {
+          this.users = state;
+          this.data = new MatTableDataSource<UserInterface>(this.users);
+          this.data.paginator = this.paginator;
+        });
+  }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngOnInit(): void {
-    this.http.getUsers()
-        .subscribe(res => {
-          this.users = res;
-          this.data = new MatTableDataSource<UserInterface>(this.users);
-          this.data.paginator = this.paginator;
-        });
+    this.http.getUsers();
   }
 }

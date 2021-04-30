@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed, tick} from '@angular/core/testing';
 
 import { TableComponent } from './table.component';
 
@@ -21,5 +21,9 @@ describe('TableComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should contain data', () => {
+    expect(component).toContain('users');
   });
 });
